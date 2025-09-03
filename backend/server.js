@@ -1,51 +1,88 @@
+// const express = require("express");
+// const app = express();
+// const Car = require('./models/carModel');
+// const port = process.env.PORT || 5000;
+// const dbConnection = require ('./db');
+// app.use(express.json());
+
+// require('dotenv').config();
+
+// // require('dotenv').config({ path: '.env' });
+// // console.log(process.env.MONGOURL)
+// const path = require("path");
+// const usersRoute = require('./routes/usersRoute')
+// const carsRoute = require('./routes/carsRoute')
+// const bookingsRoute = require('./routes/bookingsRoute')
+
+
+// app.use("/api/cars/", require("./routes/carsRoute"));
+// app.use("/api/users/", require("./routes/usersRoute"));
+// app.use("/api/bookings/", require("./routes/bookingsRoute"));
+
+
+// __dirname = path.resolve();
+
+// if(process.env.NODE_ENV==="production") {
+//  app.use(express.static(path.join(__dirname,"/frontend/build")));
+
+//  app.get('*',(req,res)=>{
+//    res.sendFile(path.resolve(__dirname,"frontend","build","index.html"));
+//  });
+// }else{
+// 	app.get("/", (req, res)=>{
+//       res.send("API is running.");
+// 	});
+// }
+
+// //static files
+// app.use(express.static(path.join(__dirname,'../frontend/build')))
+
+// app.get('*', function(req,res){
+//   res.sendFile(path.join(__dirname,"../frontend/build/index.html"))
+// })
+
+
+// //----------deployment-----------
+
+
+
+// app.get("/", (req, res) => res.send("Hello World!"));
+
+// app.listen(port, () => console.log(`Node JS Server Started in Port ${port}`));
+
+
+
 const express = require("express");
+const path = require("path");
+require("dotenv").config();
+const dbConnection = require("./db"); // ensures DB connects
+
 const app = express();
-const Car = require('./models/carModel');
 const port = process.env.PORT || 5000;
-const dbConnection = require ('./db');
+
+// Middleware
 app.use(express.json());
 
-require('dotenv').config();
+// Routes
+app.use("/api/cars", require("./routes/carsRoute"));
+app.use("/api/users", require("./routes/usersRoute"));
+app.use("/api/bookings", require("./routes/bookingsRoute"));
 
-// require('dotenv').config({ path: '.env' });
-// console.log(process.env.MONGOURL)
-const path = require("path");
-const usersRoute = require('./routes/usersRoute')
-const carsRoute = require('./routes/carsRoute')
-const bookingsRoute = require('./routes/bookingsRoute')
+// Deployment setup
+if (process.env.NODE_ENV === "production") {
+  __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, "frontend", "build")));
 
-
-app.use("/api/cars/", require("./routes/carsRoute"));
-app.use("/api/users/", require("./routes/usersRoute"));
-app.use("/api/bookings/", require("./routes/bookingsRoute"));
-
-
-__dirname = path.resolve();
-
-if(process.env.NODE_ENV==="production") {
- app.use(express.static(path.join(__dirname,"/frontend/build")));
-
- app.get('*',(req,res)=>{
-   res.sendFile(path.resolve(__dirname,"frontend","build","index.html"));
- });
-}else{
-	app.get("/", (req, res)=>{
-      res.send("API is running.");
-	});
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running...");
+  });
 }
 
-//static files
-app.use(express.static(path.join(__dirname,'../frontend/build')))
-
-app.get('*', function(req,res){
-  res.sendFile(path.join(__dirname,"../frontend/build/index.html"))
-})
-
-
-//----------deployment-----------
-
-
-
-app.get("/", (req, res) => res.send("Hello World!"));
-
-app.listen(port, () => console.log(`Node JS Server Started in Port ${port}`));
+// Start server
+app.listen(port, () =>
+  console.log(`🚀 Node JS Server started on port ${port}`)
+);
