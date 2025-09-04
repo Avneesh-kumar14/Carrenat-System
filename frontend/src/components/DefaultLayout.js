@@ -46,7 +46,7 @@ function DefaultLayout(props) {
       <div className='navbar'>
         <div className='navcontainer'>
 
-          <span className='logo'> <FontAwesomeIcon icon={faCar} />  CarDekho</span>
+          <span className='logo'> <FontAwesomeIcon icon={faCar} /> CAR VAULT </span>
           <div className='navItems'>
             <Dropdown overlay={menu} placement="bottomCenter">
               <button className="signin">{user.username}</button>

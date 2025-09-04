@@ -1,62 +1,151 @@
+// const express = require("express");
+// const router = express.Router();
+// const Booking = require("../models/bookingModel");
+// const Car = require("../models/carModel");
+// const { v4: uuidv4 } = require("uuid");
+// const stripe = require("stripe")(process.env.BACK_END_STRIPE_KEY);
+// router.post("/bookcar", async (req, res) => {
+//   const { token } = req.body;
+//   try {
+//     const customer = await stripe.customers.create({
+//       email: token.email,
+//       source: token.id,
+//     });
+
+//     const payment = await stripe.charges.create(
+//       {
+//         amount: req.body.totalAmount * 100,
+//         currency: "inr",
+//         customer: customer.id,
+//         receipt_email: token.email
+//       },
+//       {
+//         idempotencyKey: uuidv4(),
+        
+//       }
+//     );
+
+//     if (payment) {
+//       req.body.transactionId = payment.source.id;
+//       const newbooking = new Booking(req.body);
+//       await newbooking.save();
+//       const car = await Car.findOne({ _id: req.body.car });
+//       console.log(req.body.car);
+//       car.bookedTimeSlots.push(req.body.bookedTimeSlots);
+
+//       await car.save();
+//       res.send("Your booking is successfull");
+//     } else {
+//       return res.status(400).json(error);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(400).json(error);
+//   }
+// });
+
+
+// router.get("/getallbookings", async(req, res) => {
+
+//     try {
+
+//         const bookings = await Booking.find().populate('car')
+//         res.send(bookings)
+        
+//     } catch (error) {
+//         return res.status(400).json(error);
+//     }
+  
+// });
+
+
+// module.exports = router;
+
+
+// const express = require("express");
+// const router = express.Router();
+// const Booking = require("../models/bookingModel");
+// const Car = require("../models/carModel");
+// const { v4: uuidv4 } = require("uuid");
+
+// // Book a car (Test Mode)
+// router.post("/bookcar", async (req, res) => {
+//   try {
+//     // generate fake transactionId
+//     req.body.transactionId = req.body.token?.id || uuidv4();
+
+//     // save booking
+//     const newBooking = new Booking(req.body);
+//     await newBooking.save();
+
+//     // update car slots
+//     const car = await Car.findOne({ _id: req.body.car });
+//     if (!car.bookedTimeSlots) car.bookedTimeSlots = [];
+//     car.bookedTimeSlots.push(req.body.bookedTimeSlots);
+//     await car.save();
+
+//     res.send("✅ Your booking was successful (Test Mode)");
+//   } catch (error) {
+//     console.error("Booking error:", error.message);
+//     return res.status(400).json({ message: "Booking failed", error });
+//   }
+// });
+
+// // Get all bookings
+// router.get("/getallbookings", async (req, res) => {
+//   try {
+//     const bookings = await Booking.find().populate("car");
+//     res.send(bookings);
+//   } catch (error) {
+//     console.error("Get bookings error:", error.message);
+//     return res.status(400).json({ message: "Error fetching bookings", error });
+//   }
+// });
+
+// module.exports = router;
+
+
+
+
+// backend/routes/bookingRoute.js
 const express = require("express");
 const router = express.Router();
 const Booking = require("../models/bookingModel");
 const Car = require("../models/carModel");
 const { v4: uuidv4 } = require("uuid");
-const stripe = require("stripe")(process.env.BACK_END_STRIPE_KEY);
+
+// Book a car (Fake/Test mode - no real Stripe)
 router.post("/bookcar", async (req, res) => {
-  const { token } = req.body;
   try {
-    const customer = await stripe.customers.create({
-      email: token.email,
-      source: token.id,
-    });
+    // generate fake transaction id
+    req.body.transactionId = req.body.token?.id || uuidv4();
 
-    const payment = await stripe.charges.create(
-      {
-        amount: req.body.totalAmount * 100,
-        currency: "inr",
-        customer: customer.id,
-        receipt_email: token.email
-      },
-      {
-        idempotencyKey: uuidv4(),
-        
-      }
-    );
+    // save booking
+    const newBooking = new Booking(req.body);
+    await newBooking.save();
 
-    if (payment) {
-      req.body.transactionId = payment.source.id;
-      const newbooking = new Booking(req.body);
-      await newbooking.save();
-      const car = await Car.findOne({ _id: req.body.car });
-      console.log(req.body.car);
-      car.bookedTimeSlots.push(req.body.bookedTimeSlots);
+    // update car slots
+    const car = await Car.findOne({ _id: req.body.car });
+    if (!car.bookedTimeSlots) car.bookedTimeSlots = [];
+    car.bookedTimeSlots.push(req.body.bookedTimeSlots);
+    await car.save();
 
-      await car.save();
-      res.send("Your booking is successfull");
-    } else {
-      return res.status(400).json(error);
-    }
+    res.send("✅ Your booking was successful (Test Mode)");
   } catch (error) {
-    console.log(error);
-    return res.status(400).json(error);
+    console.error("Booking error:", error.message);
+    return res.status(400).json({ message: "Booking failed", error });
   }
 });
 
-
-router.get("/getallbookings", async(req, res) => {
-
-    try {
-
-        const bookings = await Booking.find().populate('car')
-        res.send(bookings)
-        
-    } catch (error) {
-        return res.status(400).json(error);
-    }
-  
+// Get all bookings
+router.get("/getallbookings", async (req, res) => {
+  try {
+    const bookings = await Booking.find().populate("car");
+    res.send(bookings);
+  } catch (error) {
+    console.error("Get bookings error:", error.message);
+    return res.status(400).json({ message: "Error fetching bookings", error });
+  }
 });
-
 
 module.exports = router;
