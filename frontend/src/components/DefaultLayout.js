@@ -5,7 +5,6 @@ import "./defaultlayout.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCar } from "@fortawesome/free-solid-svg-icons"
 
-
 function DefaultLayout(props) {
   const user = JSON.parse(localStorage.getItem('user'))
   const menu = (
@@ -58,6 +57,9 @@ function DefaultLayout(props) {
 
       </div>
       <div className="content">{props.children}</div>
+
+
+
 
     </div>
   );
