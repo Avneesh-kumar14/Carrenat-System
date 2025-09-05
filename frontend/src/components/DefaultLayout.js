@@ -8,7 +8,7 @@ import { faCar } from "@fortawesome/free-solid-svg-icons"
 function DefaultLayout(props) {
   const user = JSON.parse(localStorage.getItem('user'))
   const menu = (
-    <Menu>
+    <Menu >
       <Menu.Item>
         <a
 

@@ -80,7 +80,7 @@ button{
 }
 .carimg{
   height:150px;
-  width: auto;
+  width: 180px;
   border-radius: 5px;
   transform: translateY(-50px);
 }

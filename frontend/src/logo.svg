@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50">
+  <rect width="150" height="50" fill="#ff6600"/>
+  <text x="50%" y="50%" font-size="20" font-family="Arial" fill="white"
+        text-anchor="middle" alignment-baseline="central">
+    CarDekho RentCars
+  </text>
+</svg>

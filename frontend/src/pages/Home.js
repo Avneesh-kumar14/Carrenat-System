@@ -228,6 +228,43 @@ function Home() {
 
             </Row>
 
+
+            {/* Footer */}
+<div className="footer">
+  <div className="footer-container">
+    {/* Left Section - Logo & About */}
+    <div className="footer-section">
+      <h2 className="footer-logo">CAR VAULT </h2>
+      <p>Your trusted car rental service with affordable prices and luxury options.</p>
+    </div>
+
+    {/* Middle Section - Quick Links */}
+    <div className="footer-section">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/cars">Browse Cars</Link></li>
+        <li><Link to="/about">About Us</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
+      </ul>
+    </div>
+
+    {/* Right Section - Contact Info */}
+    <div className="footer-section">
+      <h3>Contact Us</h3>
+      <p>Email: support@cardekho.com</p>
+      <p>Phone: +91 98765 43210</p>
+      <p>Address: Connaught Place, New Delhi</p>
+    </div>
+  </div>
+
+  {/* Bottom Section */}
+  <div className="footer-bottom">
+    <p>© {new Date().getFullYear()} CAR VAULT. All rights reserved.</p>
+  </div>
+</div>
+
+
         </DefaultLayout>
     )
 }

@@ -1,12 +1,12 @@
 .navbar{
     height: 50px;
-    background-color: #FF9F45;
+    background-color: #0077b6;
     display: flex;
     justify-content: center;
 }
 .navcontainer{
     width: 100%;
-    background-color: #FF9F45;
+    background-color: #0077b6;
     max-width: 1024px;
     display: flex;
     align-items: center;
@@ -26,7 +26,7 @@
     padding: 5px 10px;
     color: #F76E11;
     border-radius: 5px;
-    border-color: #3E78B2;
+    border-color: #2c87d2;
     font-weight: 500;
     background-color: white;
 }
