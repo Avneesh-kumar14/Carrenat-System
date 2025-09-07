@@ -1,25 +1,13 @@
 
 
 const mongoose = require("mongoose");
-require("dotenv").config();
 
-function connectDB() {
-  mongoose.connect(process.env.MONGO_URI, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  });
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true },
+  password: { type: String, required: true },
+  role: { type: String, enum: ["user", "admin"], default: "user" } // new field
+});
 
-  const connection = mongoose.connection;
+const userModel = mongoose.model("users", userSchema);
 
-  connection.on("connected", () => {
-    console.log("✅ MongoDB Connection Successful");
-  });
-
-  connection.on("error", (err) => {
-    console.log("❌ MongoDB Connection Error:", err);
-  });
-}
-
-connectDB();
-
-module.exports = mongoose;
+module.exports = userModel;

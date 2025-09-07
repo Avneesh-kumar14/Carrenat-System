@@ -10,7 +10,7 @@ import Spinner from "../components/Spinner";
 import "aos/dist/aos.css"; 
 import { EyeTwoTone, EyeInvisibleOutlined } from "@ant-design/icons";
 
-// Initialize animations
+
 AOS.init();
 
 function Register() {

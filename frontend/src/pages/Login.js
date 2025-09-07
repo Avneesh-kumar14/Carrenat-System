@@ -1,7 +1,8 @@
 
+
 import React from 'react'
-import { Row, Col, Form, Input } from 'antd'
-import { Link } from 'react-router-dom'
+import { Row, Col, Form, Input, message } from 'antd'
+import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from '../redux/actions/userActions'
 import AOS from 'aos'
@@ -9,16 +10,37 @@ import Spinner from '../components/Spinner'
 import 'aos/dist/aos.css'
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons'
 
-// Initialize AOS animations
 AOS.init()
 
 function Login() {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { loading } = useSelector(state => state.alertsReducer)
 
-  function onFinish(values) {
-    dispatch(userLogin(values))
-    console.log(values)
+  async function onFinish(values) {
+    try {
+      // Call backend login API directly here
+      const response = await fetch("/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      })
+
+      if (!response.ok) {
+        return message.error("Invalid username or password")
+      }
+
+      const user = await response.json()
+      localStorage.setItem("user", JSON.stringify(user))  // ✅ store role also
+
+      message.success("Login successful")
+
+      // redirect to home
+      history.push("/")
+    } catch (err) {
+      console.error(err)
+      message.error("Something went wrong")
+    }
   }
 
   return (
@@ -32,7 +54,7 @@ function Login() {
             className='w-100'
             data-aos='slide-right'
             data-aos-duration='1500'
-            src="https://images.unsplash.com/photo-1532268116505-8c59cc37d2e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=864&q=80"
+            src="https://images.unsplash.com/photo-1532268116505-8c59cc37d2e6?auto=format&fit=crop&w=864&q=80"
             alt="login-banner"
           />
         </Col>
@@ -40,7 +62,7 @@ function Login() {
         {/* Right Side - Login Form */}
         <Col lg={8} className='text-left p-5'>
           <Form layout='vertical' className='login-form p-5' onFinish={onFinish}>
-            <h1 className='login-logo'>CAR VAULT </h1>
+            <h1 className='login-logo'>CAR VAULT</h1>
             <h1>Login</h1>
             <hr />
 
@@ -49,7 +71,7 @@ function Login() {
               <Input placeholder="Enter your username" />
             </Form.Item>
 
-            {/* Password Field with Eye Toggle */}
+            {/* Password Field */}
             <Form.Item name='password' label='Password' rules={[{ required: true }]}>
               <Input.Password
                 placeholder="Enter your password"
