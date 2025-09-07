@@ -30,7 +30,7 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) web application for c
    cd Carrenat-System/backend
 2. cd frontend  - npm install
 3.  cd backend  - npm install
-4.  Aftyer that bash - npm start in both
+4.  After this  bash - npm start in both
 
 5. PORT=5000
 MONGO_URI= Your local host id
