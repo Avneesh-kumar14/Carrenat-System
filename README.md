@@ -33,9 +33,13 @@ A full-stack MERN (MongoDB, Express.js, React.js, Node.js) web application for c
 4.  After this  bash - npm start in both
 
 5. PORT=5000
+6. ## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 MONGO_URI= Your local host id
 SECRET_KEY= enter you secret key 
 PAYMENT_MODE=fake
 BACK_END_STRIPE_KEY=sk_test_dummyKey123456
 
-6. Start the server -  node server.js
+7. Start the server -  node server.js
